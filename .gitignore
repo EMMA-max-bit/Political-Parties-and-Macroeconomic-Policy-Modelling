@@ -1,49 +1,41 @@
-# History files
-.Rhistory
-.Rapp.history
+# Set working directory
+setwd("C:/Users/Emma Tergunwa/Desktop/EMADA")
+getwd()
 
-# Session Data files
-.RData
-.RDataTmp
+# Load necessary libraries
+library(readr)
+library(ggplot2)
 
-# User-specific files
-.Ruserdata
+# Load the data
+hibbs <- read_csv("C:/Users/Emma Tergunwa/Desktop/ESTHER/hibbs.csv")
+head(hibbs) # view the first few lines
+nrow(hibbs) # Number of rows
+ncol(hibbs) # Number of columns
+dim(hibbs) # Rows and columns together
+str(hibbs) # check data structure
+summary(hibbs) # summary statistics
 
-# Example code in package build process
-*-Ex.R
+# (a) Regression of Unemployment on Government Ideology
+model_unemp <- lm(unemployment ~ percleft, data = hibbs)
+summary(model_unemp)
 
-# Output files from R CMD build
-/*.tar.gz
+# plot Unemployment vs Government Ideology
+plot(hibbs$percleft, hibbs$unemployment,
+     main = "Unemployment vs. Government Ideology",
+     xlab = "% of Years Left in Power (1945–1969)",
+     ylab = "Average Unemployment Rate",
+     pch = 19, col = "red")
+abline(model_unemp, col = "green", lwd = 2)
 
-# Output files from R CMD check
-/*.Rcheck/
+# (b) Regression of Inflation on Government Ideology
+model_infl <- lm(inflation ~ percleft, data = hibbs)
+summary(model_infl)
 
-# RStudio files
-.Rproj.user/
-
-# produced vignettes
-vignettes/*.html
-vignettes/*.pdf
-
-# OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
-.httr-oauth
-
-# knitr and R markdown default cache directories
-*_cache/
-/cache/
-
-# Temporary files created by R markdown
-*.utf8.md
-*.knit.md
-
-# R Environment Variables
-.Renviron
-
-# pkgdown site
-docs/
-
-# translation temp files
-po/*~
-
-# RStudio Connect folder
-rsconnect/
+# plot Inflation vs Government Ideology
+plot(hibbs$percleft, hibbs$inflation,
+      main = "Inflation vs. Government Ideology",
+      xlab = "% of Years Left in Power (1945–1969)",
+      ylab = "Average Inflation Rate",
+      pch = 19, col = "red")
+abline(model_infl, col = "green", lwd = 2)
+tinytex::install_tinytex()
